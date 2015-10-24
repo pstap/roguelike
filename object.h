@@ -32,18 +32,18 @@ struct object
 
 typedef struct object object_t;
 
-void draw_object(object_t *o, uint32_t x, uint32_t y);
-void draw_object_with_lighting(object_t *o, uint32_t x, uint32_t y);
+void draw_object(object_t* o, uint32_t x, uint32_t y);
+void draw_object_with_lighting(object_t* o, uint32_t x, uint32_t y);
 object_t new_air();
 object_t new_wall();
 object_t new_door(uint8_t open);
-void open_door(object_t *o);
+void open_door(object_t* o);
 object_t new_obj_by_type(int type);
-int has_property(int property, object_t *o);
-void set_property(int property, object_t *o);
-void unset_property(int property, object_t *o);
-int is_solid(object_t *o);
-int is_open(object_t *o);
-int is_lit(object_t *o);
+int has_property(int property, object_t* o);
+void set_property(int property, object_t* o);
+void unset_property(int property, object_t* o);
+int is_solid(object_t* o);
+int is_open(object_t* o);
+int is_lit(object_t* o);
 int is_of_type(object_t *o, int t);
 #endif

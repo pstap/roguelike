@@ -6,7 +6,6 @@ room_t new_room(uint32_t width, uint32_t height)
     temp.width = width;
     temp.height = height;
 
-	// Array of objects
     temp.map = malloc(sizeof(object_t *) * height);
 
     int i, j;
@@ -84,9 +83,7 @@ void add_walls(room_t *r)
 
 object_t * object_at(uint32_t x, uint32_t y, room_t *r)
 {
-    if(x < 0 || y < 0)
-        return NULL;
-    else if(x >= r->width || y >= r->height)
+    if(x >= r->width || y >= r->height)
         return NULL;
     else
         return &r->map[y][x];

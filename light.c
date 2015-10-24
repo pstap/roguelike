@@ -1,20 +1,20 @@
 #include "light.h"
 
-void clear_lighting(room_t *r)
+void clear_lighting(room_t* r)
 {
     int i, j;
     for(i = 0; i < r->height; i++)
     {
         for(j = 0; j < r->width; j++)
         {
-            unset_property(PROP_LIT, r->map[i][j]);
+            unset_property(PROP_LIT, &r->map[i][j]);
         }
     }
 }
 
-void emit_light(uint32_t x, uint32_t y, uint32_t radius, room_t *r)
+void emit_light(uint32_t x, uint32_t y, uint32_t radius, room_t* r)
 {
-    object_t *o;
+    object_t* o;
     int i;
 
     for(i = 1; i <= radius; i++)
@@ -42,7 +42,7 @@ void emit_light(uint32_t x, uint32_t y, uint32_t radius, room_t *r)
 
 
 // Rays which cast shadows
-void cast_ray(uint32_t x, uint32_t y, int32_t dx, int32_t dy, uint32_t length, room_t *r)
+void cast_ray(uint32_t x, uint32_t y, int32_t dx, int32_t dy, uint32_t length, room_t* r)
 {
     int not_hit_solid = 1;
     uint32_t current_x = x;
@@ -65,7 +65,7 @@ void cast_ray(uint32_t x, uint32_t y, int32_t dx, int32_t dy, uint32_t length, r
     }
 }
 
-void exp_cast(uint32_t x, uint32_t y, uint32_t radius, room_t *r)
+void exp_cast(uint32_t x, uint32_t y, uint32_t radius, room_t* r)
 {
     // upwards
     cast_ray(x, y, +0, -1, radius, r);

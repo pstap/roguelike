@@ -1,12 +1,12 @@
 #include "player.h"
 
 
-player_t * new_player(uint32_t x, uint32_t y)
+player_t new_player(uint32_t x, uint32_t y)
 {
-    player_t *temp = malloc(sizeof(player_t));
-    temp->pos.x = x;
-    temp->pos.y = y;
-    temp->model = '@';
+    player_t temp;
+    temp.pos.x = x;
+    temp.pos.y = y;
+    temp.model = '@';
 
     return temp;
 }
@@ -46,10 +46,10 @@ void move_player(player_t *p, room_t *r, uint32_t dir)
     }
 }
 
-// Attempts to open a door if present
-void attempt_open_door(player_t *p, room_t *r)
+// Attempts to open a door if present, return 1 on succesful open
+int attempt_open_door(player_t* p, room_t* r)
 {
-    object_t *door = NULL;
+    object_t* door = NULL;
     
     if(is_of_type(object_at(p->pos.x - 1, p->pos.y, r), DOOR_ID))
         door = object_at(p->pos.x - 1, p->pos.y, r);
@@ -64,5 +64,12 @@ void attempt_open_door(player_t *p, room_t *r)
         door = object_at(p->pos.x, p->pos.y + 1, r);
 
     if(door != NULL)
+	{
         open_door(door);
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
 }

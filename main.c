@@ -26,7 +26,7 @@ void cleanup()
 }
 
 // Returns 0 for quit, 1 for anything else
-int handle_input(char c, player_t *p, room_t *r)
+int handle_input(char c, player_t* p, room_t* r)
 {
     if(c == ',')
         move_player(p, r, 0);
@@ -43,9 +43,13 @@ int handle_input(char c, player_t *p, room_t *r)
     if(c == 'l')
     {
         if(DBG_CALC_LIGHTING)
+		{
             DBG_CALC_LIGHTING = 0;
+		}
         else
+		{
             DBG_CALC_LIGHTING = 1;
+		}
     }
 
     return 1;
@@ -53,7 +57,7 @@ int handle_input(char c, player_t *p, room_t *r)
 
 
 
-inline void setup_room(room_t *main_room)
+void setup_room(room_t* main_room)
 {
     add_walls(main_room);
     add_new_object_at(1, 3, new_wall(), main_room);
@@ -64,56 +68,41 @@ inline void setup_room(room_t *main_room)
     add_new_object_at(9, 17, new_door(0), main_room);
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     setup();
     
-    player_t *p = new_player(0, 0);
+    player_t p = new_player(1, 1);
     room_t main_room = new_room(20, 20);
 
     setup_room(&main_room);
 
     if(DBG_SHOW_POS)
     {
-        mvprintw(21, 0, "Player x: %d", p->pos.x);
-        mvprintw(22, 0, "Player y: %d", p->pos.y);
+        mvprintw(21, 0, "Player x: %d", p.pos.x);
+        mvprintw(22, 0, "Player y: %d", p.pos.y);
     }
 
     draw_room(&main_room);
-    draw_player(p);
+    draw_player(&p);
     
     char c;
     int run = 1;
 
-    
-//    clear_lighting(&main_room);
-
     while(run)
     {
-	mvprintw(23,0, "Ready for input");
         c = getch();
-        run = handle_input(c, p, &main_room);
+        run = handle_input(c, &p, &main_room);
 
         erase();
     
-        if(DBG_CALC_LIGHTING)
-        {
-            //clear_lighting(&main_room);
-            //emit_ligxht(p->pos.x, p->pos.y, 4, main_room);
-            //exp_cast(p->pos.x, p->pos.y, 6, &main_room);
-            //draw_room_with_lighting(&main_room);
-        }
-        else
-        { 
-            draw_room(&main_room);
-        }
-
-        draw_player(p);
+		draw_room(&main_room);
+        draw_player(&p);
 
         if(DBG_SHOW_POS)
         {
-            mvprintw(21, 0, "Player x: %d", p->pos.x);
-            mvprintw(22, 0, "Player y: %d", p->pos.y);
+            mvprintw(21, 0, "Player x: %d", p.pos.x);
+            mvprintw(22, 0, "Player y: %d", p.pos.y);
         }
 
         refresh();
@@ -121,7 +110,6 @@ int main(int argc, char *argv[])
 
     cleanup();
     destroy_room(&main_room);
-    free(p);
 
     return 0;
 }
