@@ -2,7 +2,9 @@
 
 void clear_lighting(room_t* r)
 {
-    int i, j;
+    int i;
+	int j;
+	
     for(i = 0; i < r->height; i++)
     {
         for(j = 0; j < r->width; j++)
@@ -75,5 +77,4 @@ void exp_cast(uint32_t x, uint32_t y, uint32_t radius, room_t* r)
     cast_ray(x, y, -1, +0, radius, r);
     // right
     cast_ray(x, y, +1, +0, radius, r);
-
 }

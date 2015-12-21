@@ -1,22 +1,22 @@
 #include "player.h"
 
 
-player_t new_player(uint32_t x, uint32_t y)
+player_t new_player(uint32_t x, uint32_t y, char* n)
 {
     player_t temp;
     temp.pos.x = x;
     temp.pos.y = y;
     temp.model = '@';
-
+	
     return temp;
 }
 
-void draw_player(player_t *p)
+void draw_player(player_t* p)
 {
     mvaddch(p->pos.y, p->pos.x, p->model);
 }
 
-void move_player(player_t *p, room_t *r, uint32_t dir)
+void move_player(player_t* p, room_t* r, uint32_t dir)
 {
     // 0 = north, 1 = south, 2 = east, 3 = west
     switch(dir)

@@ -26,7 +26,7 @@ room_t new_room(uint32_t width, uint32_t height)
     return temp;
 }
 
-void destroy_room(room_t *r)
+void destroy_room(room_t* r)
 {
     int i;
 
@@ -34,11 +34,9 @@ void destroy_room(room_t *r)
     {
 		free(r->map[i]);
     }
-
-    free(r->map);
 }
 
-void draw_room(room_t *r)
+void draw_room(room_t* r)
 {   
     int i, j;
     for(i = 0; i < r->height; i++)
@@ -50,7 +48,7 @@ void draw_room(room_t *r)
     }
 }
 
-void draw_room_with_lighting(room_t *r)
+void draw_room_with_lighting(room_t* r)
 {   
     int i, j;
     for(i = 0; i < r->height; i++)
@@ -62,7 +60,7 @@ void draw_room_with_lighting(room_t *r)
     }
 }
 
-void add_walls(room_t *r)
+void add_walls(room_t* r)
 {
     int i;
     int j;
@@ -81,7 +79,7 @@ void add_walls(room_t *r)
     }
 }
 
-object_t * object_at(uint32_t x, uint32_t y, room_t *r)
+object_t * object_at(uint32_t x, uint32_t y, room_t* r)
 {
     if(x >= r->width || y >= r->height)
         return NULL;
@@ -89,7 +87,18 @@ object_t * object_at(uint32_t x, uint32_t y, room_t *r)
         return &r->map[y][x];
 }
 
-void add_new_object_at(uint32_t x, uint32_t y, object_t o, room_t *r)
+void add_new_object_at(uint32_t x, uint32_t y, object_t o, room_t* r)
 {
     r->map[y][x] = o;
+}
+
+void setup_test_room(room_t* main_room)
+{
+    add_walls(main_room);
+    add_new_object_at(1, 3, new_wall(), main_room);
+    add_new_object_at(3, 1, new_wall(), main_room);
+    add_new_object_at(2, 3, new_wall(), main_room);
+    add_new_object_at(3, 3, new_wall(), main_room);
+    add_new_object_at(3, 2, new_door(0), main_room);
+    add_new_object_at(9, 17, new_door(0), main_room);
 }

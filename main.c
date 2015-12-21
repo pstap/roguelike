@@ -5,107 +5,42 @@
 #include "light.h"
 #include "room.h"
 #include "player.h"
-#include "olist.h"
+#include "ui.h"
+#include "input.h"
 
-// Debugging settings
-uint8_t DBG_SHOW_POS = 1;
-uint8_t DBG_CALC_LIGHTING = 0;
-
-void setup()
-{
-    initscr();
-    raw();
-    noecho();
-    curs_set(0);
-    keypad(stdscr, TRUE);
-}
 
 void cleanup()
 {
     endwin();
 }
 
-// Returns 0 for quit, 1 for anything else
-int handle_input(char c, player_t* p, room_t* r)
-{
-    if(c == ',')
-        move_player(p, r, 0);
-    else if(c == 'o')
-        move_player(p, r, 1);
-    else if(c == 'e')
-        move_player(p, r, 2);
-    else if(c == 'a')
-        move_player(p, r, 3);
-    if(c == 'q')
-        return 0;
-    if(c == 'd')
-        attempt_open_door(p, r);
-    if(c == 'l')
-    {
-        if(DBG_CALC_LIGHTING)
-		{
-            DBG_CALC_LIGHTING = 0;
-		}
-        else
-		{
-            DBG_CALC_LIGHTING = 1;
-		}
-    }
-
-    return 1;
-}
-
-
-
-void setup_room(room_t* main_room)
-{
-    add_walls(main_room);
-    add_new_object_at(1, 3, new_wall(), main_room);
-    add_new_object_at(3, 1, new_wall(), main_room);
-    add_new_object_at(2, 3, new_wall(), main_room);
-    add_new_object_at(3, 3, new_wall(), main_room);
-    add_new_object_at(3, 2, new_door(0), main_room);
-    add_new_object_at(9, 17, new_door(0), main_room);
-}
-
 int main(int argc, char* argv[])
 {
-    setup();
-    
-    player_t p = new_player(1, 1);
+    ui_setup();
+	
+    player_t p = new_player(1, 1, "hi");
     room_t main_room = new_room(20, 20);
+	uint8_t game_mode = 0;
 
-    setup_room(&main_room);
+	ui_settings_t ui;
+	ui.display_pos = 1;
 
-    if(DBG_SHOW_POS)
-    {
-        mvprintw(21, 0, "Player x: %d", p.pos.x);
-        mvprintw(22, 0, "Player y: %d", p.pos.y);
-    }
-
-    draw_room(&main_room);
-    draw_player(&p);
+    setup_test_room(&main_room);
+	render_frame(&ui, game_mode, &p, &main_room);
     
     char c;
     int run = 1;
 
+	prompt_for_string(0, 21, "Enter name: ", p.name);
+	
+	mvprintw(1, 21, "Name: %s", p.name);
+	
     while(run)
     {
         c = getch();
-        run = handle_input(c, &p, &main_room);
+        run = handle_input(c, &ui, &p, &main_room);
 
-        erase();
-    
-		draw_room(&main_room);
-        draw_player(&p);
-
-        if(DBG_SHOW_POS)
-        {
-            mvprintw(21, 0, "Player x: %d", p.pos.x);
-            mvprintw(22, 0, "Player y: %d", p.pos.y);
-        }
-
-        refresh();
+		render_frame(&ui, game_mode, &p, &main_room);
     }
 
     cleanup();
