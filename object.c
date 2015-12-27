@@ -1,5 +1,6 @@
 #include "object.h"
 
+// Draw an object given a particular X and Y
 void draw_object(object_t* o, uint32_t x, uint32_t y)
 {
     switch(o->type)
@@ -18,6 +19,7 @@ void draw_object(object_t* o, uint32_t x, uint32_t y)
     }
 }
 
+// TODO Either fix lighting or just give up
 void draw_object_with_lighting(object_t* o, uint32_t x, uint32_t y)
 {
     if(is_lit(o))
@@ -26,6 +28,7 @@ void draw_object_with_lighting(object_t* o, uint32_t x, uint32_t y)
     }
 }
 
+// Return a new air object
 object_t new_air()
 {
     object_t temp;
@@ -36,6 +39,7 @@ object_t new_air()
     return temp;
 }
 
+// Return a new wall object
 object_t new_wall()
 {
     object_t temp;
@@ -46,6 +50,8 @@ object_t new_wall()
     return temp;
 
 }
+
+// Return a new door object
 object_t new_door(uint8_t open)
 {
     object_t temp;
@@ -66,6 +72,7 @@ object_t new_door(uint8_t open)
     return temp;
 }
 
+// Opens a door
 void open_door(object_t* o)
 {
     if(o->type == DOOR_ID)
@@ -113,9 +120,13 @@ object_t new_obj_by_type(int type)
 int has_property(int property, object_t* o)
 {
     if(o->properties & property)
+	{
         return 1;
+	}
     else
+	{
         return 0;
+	}
 }
 
 void set_property(int property, object_t* o)
@@ -131,31 +142,47 @@ void unset_property(int property, object_t* o)
 int is_solid(object_t* o)
 {
     if(o->properties & PROP_SOLID)
+	{
         return 1;
+	}
     else
+	{	   
         return 0;
+	}
 }
 
 int is_open(object_t* o)
 {
     if(o->properties & PROP_OPEN)
+	{		
         return 1;
+	}
     else
+	{
         return 0;
+	}
 }
 
 int is_lit(object_t* o)
 {
     if(o->properties & PROP_LIT)
+	{
         return 1;
+	}
     else
+	{
         return 0;
+	}
 }
 
 int is_of_type(object_t* o, int t)
 {
     if(o->type == t)
+	{
         return 1;
+	}
     else
+	{
         return 0;
+	}
 }

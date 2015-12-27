@@ -1,5 +1,6 @@
 #include "input.h"
 
+// Just handle any keypresses that come up, not mode dependent. Crappyx
 // Returns 0 for quit, 1 for anything else
 int handle_input(char c, ui_settings_t* ui, player_t* p, room_t* r)
 {

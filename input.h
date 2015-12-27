@@ -1,6 +1,13 @@
 #ifndef INPUT_H
 #define INPUT_H
 
+/*
+ * input.h
+ * handle keypresses
+ *
+ */
+
+
 #include "player.h"
 #include "room.h"
 #include "ui.h"

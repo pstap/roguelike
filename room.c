@@ -1,5 +1,7 @@
 #include "room.h"
 
+
+// Generate a new room, allocating enough space
 room_t new_room(uint32_t width, uint32_t height)
 {
     room_t temp;
@@ -26,6 +28,7 @@ room_t new_room(uint32_t width, uint32_t height)
     return temp;
 }
 
+// Free all stored memory
 void destroy_room(room_t* r)
 {
     int i;
@@ -36,6 +39,7 @@ void destroy_room(room_t* r)
     }
 }
 
+// Go through and draw each object in a room
 void draw_room(room_t* r)
 {   
     int i, j;
@@ -48,6 +52,7 @@ void draw_room(room_t* r)
     }
 }
 
+// (Deprecated)
 void draw_room_with_lighting(room_t* r)
 {   
     int i, j;
@@ -60,6 +65,7 @@ void draw_room_with_lighting(room_t* r)
     }
 }
 
+// Draw walls around the the border of a r
 void add_walls(room_t* r)
 {
     int i;
@@ -79,6 +85,7 @@ void add_walls(room_t* r)
     }
 }
 
+// Return the object at a given index
 object_t * object_at(uint32_t x, uint32_t y, room_t* r)
 {
     if(x >= r->width || y >= r->height)
@@ -87,11 +94,13 @@ object_t * object_at(uint32_t x, uint32_t y, room_t* r)
         return &r->map[y][x];
 }
 
+// Add a new object at a particular position
 void add_new_object_at(uint32_t x, uint32_t y, object_t o, room_t* r)
 {
     r->map[y][x] = o;
 }
 
+// Just setup a test room
 void setup_test_room(room_t* main_room)
 {
     add_walls(main_room);

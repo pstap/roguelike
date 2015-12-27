@@ -13,6 +13,7 @@ struct player
 {
     point_t pos;
     uint16_t hp;
+	uint8_t ap;
     uint8_t level;
     char model;
 	char name[MAX_NAME_SIZE];

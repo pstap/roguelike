@@ -4,7 +4,7 @@
 // Objects only exist in the physical world
 // Items are to be implemented
 // Items may appear in the world, but will take up no physical space
-// Items will be put in a linked list stored in the room
+// Items will be put in a linked list stored in the room (with position)
 
 // Each object has an type (basically an ID)
 #define ERROR_ID -1

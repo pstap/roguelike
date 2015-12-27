@@ -9,15 +9,17 @@ static uint32_t strlen(char* str)
 
 void prompt_for_string(uint16_t y, uint16_t x, char* prompt, char* buf)
 {
+	uint32_t len;
+	char c;
+	int i = 0;
+	
 	mvprintw(y, x, prompt);
 
 	curs_set(1);
 	timeout(-1);
 
-	uint32_t len = strlen(prompt);
-
-	char c;
-	int i = 0;
+	len = strlen(prompt);
+	
 	while((c = getch()) != '\n' && i < 100)
 	{
 		if(c == 8 || c == 127)
@@ -57,7 +59,7 @@ void render_frame(ui_settings_t* u, uint8_t mode, player_t* p, room_t* r)
 	refresh();
 }
 
-void ui_setup()
+void ui_setup(ui_settings_t* ui_ptr)
 {
     initscr();
     raw();
@@ -65,4 +67,5 @@ void ui_setup()
     curs_set(0);
     keypad(stdscr, TRUE);
 	timeout(17);
+	getmaxyx(stdscr, ui_ptr->height, ui_ptr->width);
 }

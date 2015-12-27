@@ -20,16 +20,16 @@ light.o: light.c
 	$(CC) $(CFLAGS) light.c
 
 object.o: object.c
-	$(CC) $(CFLAGS) $(LIB) object.c 
+	$(CC) $(CFLAGS) object.c 
 
 player.o: player.c
-	$(CC) $(CFLAGS) $(LIB) player.c 
+	$(CC) $(CFLAGS) player.c 
 
 room.o: room.c
-	$(CC) $(CFLAGS) $(LIB) room.c
+	$(CC) $(CFLAGS) room.c
 
 ui.o: ui.c
-	$(CC) $(CFLAGS) $(LIB) ui.c
+	$(CC) $(CFLAGS) ui.c
 
 clean:
 	rm -rf *o rogl
